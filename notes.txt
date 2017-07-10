@@ -1,0 +1,8 @@
+jade.api
+
+npm install jade coffee-script less markdown --save
+npm install coffee-script less markdown -g
+npm install jstransformer-markdown -g
+
+
+jade --client --no-debug runtime.jade

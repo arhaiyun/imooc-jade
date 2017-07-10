@@ -1,0 +1,211 @@
+extends layout
+
+block content
+	#runtime
+	script(src="node_modules/jade/runtime.js")
+	script(src="runtime.js")
+	script.
+		var runtimeNode = 
+
+
+
+	section.
+		runtime case
+
+
+
+	h3 markdown
+	:markdown
+		Hi, this is **imooc** [link](http://github.com)
+	//- h3 less
+	//- style
+	//- 	:less
+	//- 		body {
+	//- 			p {
+	//- 				color: #ccc;
+	//- 			}
+	//- 		}
+	//- h3 coffee ??
+
+	include style
+		style.
+			h2 {
+				color: #000;
+			}
+	include title.html
+	h3 模板继承
+	block desc
+		p imooc jade study extends
+	block desc
+
+	section.
+		extend template
+
+
+	h2 mixin
+	mixin lesson
+		p imooc jade study
+	+lesson
+	
+	mixin study(name, courses)
+		p #{name}
+		ul.courses
+			each course in courses
+				li= course
+	+study('arhaiyun', ['jade', 'node'])
+	+study('Henry', ['mongoDB', 'express'])
+
+	mixin group(student)
+		h4 #{student.name}
+		+study(student.name, student.courses)
+	+group({name: 'arhaiyun', courses: ['jade', 'node']})
+
+	mixin team(slogan)
+		h4 #{slogan}
+		if block
+				block
+		else
+			p no team
+	+team('slogan')
+		p Good Job~
+
+	mixin attr(name)
+		p(class!=attributes.class) #{name}
+	+attr('attribute')(class='magic')
+
+	mixin attrs(name)
+		p&attributes(attributes) #{name}
+	+attrs('attrs')(class='magic2', id='attrid')
+
+	mixin magic(name, ...items)
+		ul(class='{#name}')
+			each item in items
+				li= item
+	+magic('magic', 'node', 'jade', 'express', '...')
+
+	section.
+			mixin syntax
+
+	
+
+
+	h2 流程代码示例
+	h3 if else
+	- var isImooc = true
+	- var lessons = ['jade', 'node']
+	if lessons
+		if lessons.length > 2
+			p #{lessons.join('# ')}
+		else if lessons.length > 1
+			p #{lessons.join(', ')}
+		else
+			p There is no lesson so far	
+	else
+			p There is no lesson so far	
+
+	h3 unless
+	unless !isImooc
+		p #{lessons.length}
+
+	section.
+		if-else&unless syntax
+
+
+
+	- var name = 'jade'
+	case name
+		when 'jade'
+			p Hi~ Jade
+		when 'java'
+			p Hi~ Java
+		when 'node'
+			p Hi~ Node
+		when 'express'
+			p Hi~ Express
+		default
+			p Hi~ #{name}
+	section.
+		switch case
+
+
+	h3 for
+	- var imooc = {course: 'jade', level: 'high'}
+	- for (var key in imooc)
+		p= imooc[key]
+	each value, key in imooc
+		p #{key}: #{value}
+	section.
+		for loop syntax
+
+
+
+	h3 each
+	- var courses = ['node', 'jade', 'mongoDB', 'express']
+	each item in courses
+		p= item
+	section.
+		each syntax
+
+
+
+	- var sections = [{id:1, items: ['a', 'b']}, {id:2, items: ['c', 'd']}]
+	dl
+		each section in sections
+			dt=section.id
+			each item in section.items
+				dd= item
+	section.
+		embed loop syntax
+
+
+
+	h2 转义
+	- var data = 'normal text'
+	- var htmlData = '<script>alert(1);</script><span>script</span>;'
+	p #{data}
+	p #{htmlData}
+	p !{htmlData}
+	p= data
+	p= htmlData
+	p \#{htmlData}
+	p \!{htmlData}
+	input(value='#{newDate}')
+	input(value=newDate)
+	section.
+		转义Section
+
+
+	style.
+		body {color: #ee5500}
+	script.
+		var imoocCourse = 'jade'
+
+	h2 文档声明以及头尾标签
+	h2 标签语法
+	section
+		div
+			ul
+				p
+	h2 元素属性
+	div#id.classname
+		a(href="http://github.com", target="_blank") github link
+	h3 元素的值，文本
+		a(href="http://github.com", title="imooc jade study", data-uid="1000") link
+		input(name="course", type="text", value="jade input label")
+		input(name="checkbox", type="checkbox", checked)
+	h2 annotation
+	h3 single line annotation
+	// this is single line annotation
+	h3 non-cached annotation
+	//- non-cached annotation
+	h3 block annotation
+	//- block annotation
+		this is also in block annotation
+	h1.title#title imooc jade study
+	#id.classname div content
+	section
+	p.
+		1.aa
+		2.bb
+
+
